@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'simpledb'
 
-class TestAdd < Test::Unit::TestCase
+class TestSimpleDB < Test::Unit::TestCase
   
   def setup
     @db = SimpleDB::Database.new
