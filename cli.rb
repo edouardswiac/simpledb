@@ -19,14 +19,15 @@ while true
     when cmd == 'SET' then
       puts db.set input[0], input[1]
     when cmd == 'BEGIN' then
-      t_id = db.begin_transaction
-      puts "Starting transaction ##{t_id}"
+      db.begin_transaction
     when cmd == 'COMMIT' then
       db.commit_transactions
-      puts "Transactions were commited"
     when cmd == 'ROLLBACK' then
-      t_id = db.rollback_transaction
-      puts "Rollback of transaction ##{t_id}"
+      begin
+        db.rollback_transaction
+      rescue Exception => e
+        puts e.message
+      end
     when cmd == 'EXIT' then
       exit
     else
