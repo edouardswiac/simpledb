@@ -20,14 +20,11 @@ class SimpleDB::Database
   end
 
   def unset(key)
-    @tx.reverse_each do |t|
-      if t.has_key?(key)
-        t.delete(key)
-        return
-      end
+    if in_transaction?
+      @tx.last[key] = nil
+    else
+      @data.delete(key)
     end
-
-    @data.delete(key)
   end
 
   def key?(key)
@@ -48,6 +45,7 @@ class SimpleDB::Database
     @tx.each do |t|
       @data.merge!(t)
     end
+    @tx = []
   end
 
   def current_transaction_id
